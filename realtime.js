@@ -27,7 +27,7 @@ io.sockets.on('connection', function(socket){
 	var interval = updateInterval();
 
     var callback = function(){
-        socket.emit('wattage', {'wattage': generateWattage(), 'interval': interval});
+        socket.emit('wattage', {'sent': new Date().getTime(), 'wattage': generateWattage(), 'interval': interval});
         interval = updateInterval();
         setTimeout(callback, interval);
     }

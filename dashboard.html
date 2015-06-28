@@ -6,19 +6,20 @@
   <body>
     <script>
       var socket = io.connect();
-      var pingStart = new Date();
 
       socket.on('wattage', function(data){
-        var now = new Date();
-        var latency = now - pingStart;
-        pingStart = now;
+        //NOTE: Latency measure is inaccurate
+        //current method can cause server/client timestamp mismatch because theyre not in sync.
+        //works if server and client runs on the same machine.
+        //also tried client side ping measure but sometimes returns negative values due to inaccuracies of setTimeout in the backend
 
-        $('#ping').text("Latency: " + (latency - data.interval));
+      	var delta = new Date().getTime() - data.sent;
+        $('#delta').text("Latency: " + delta);
         $('#wattage').text("Wattage: " + data.wattage);
         $('#interval').text("Interval: " + data.interval);
       });
     </script>
-    <div id="ping">Not sure why sometimes the value is negative.</div>
+    <div id="delta"></div>
     <div id="wattage"></div>
     <div id="interval"></div>
   </body>
