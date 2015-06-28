@@ -6,15 +6,19 @@
   <body>
     <script>
       var socket = io.connect();
+      var pingStart = Date.now();
 
       socket.on('wattage', function(data){
-      	var delta = new Date().getTime() - data.sent;
-        $('#delta').text("Latency: " + delta);
+        var latency = Date.now() - pingStart;
+
+        $('#ping').text("Latency: " + (latency - data.interval));
         $('#wattage').text("Wattage: " + data.wattage);
         $('#interval').text("Interval: " + data.interval);
+
+        pingStart = Date.now();
       });
     </script>
-    <div id="delta"></div>
+    <div id="ping"></div>
     <div id="wattage"></div>
     <div id="interval"></div>
   </body>
