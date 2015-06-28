@@ -6,20 +6,19 @@
   <body>
     <script>
       var socket = io.connect();
-      var pingStart = Date.now();
+      var pingStart = new Date();
 
       socket.on('wattage', function(data){
-        var now = Date.now();
+        var now = new Date();
         var latency = now - pingStart;
+        pingStart = now;
 
         $('#ping').text("Latency: " + (latency - data.interval));
         $('#wattage').text("Wattage: " + data.wattage);
         $('#interval').text("Interval: " + data.interval);
-
-        pingStart = now;
       });
     </script>
-    <div id="ping"></div>
+    <div id="ping">Not sure why sometimes the value is negative.</div>
     <div id="wattage"></div>
     <div id="interval"></div>
   </body>
