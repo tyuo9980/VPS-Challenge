@@ -9,13 +9,14 @@
       var pingStart = Date.now();
 
       socket.on('wattage', function(data){
-        var latency = Date.now() - pingStart;
+        var now = Date.now();
+        var latency = now - pingStart;
 
         $('#ping').text("Latency: " + (latency - data.interval));
         $('#wattage').text("Wattage: " + data.wattage);
         $('#interval').text("Interval: " + data.interval);
 
-        pingStart = Date.now();
+        pingStart = now;
       });
     </script>
     <div id="ping"></div>
