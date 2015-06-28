@@ -11,7 +11,7 @@ var fs = require('fs');
 var io = require('socket.io');
 
 var server = http.createServer(function(request, response){
-	console.log('connection');
+    console.log('connection');
 
     fs.readFile('dashboard.html',function (err, data){
         response.writeHead(200, {'Content-Type': 'text/html','Content-Length':data.length});
@@ -20,8 +20,9 @@ var server = http.createServer(function(request, response){
     });
 });
 
-server.listen(8000);
+server.listen(process.env.PORT || 8000);
 io = io.listen(server);
+
 io.sockets.on('connection', function(socket){
 	var interval = updateInterval();
 
